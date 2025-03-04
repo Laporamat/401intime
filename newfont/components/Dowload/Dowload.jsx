@@ -1,5 +1,5 @@
 import "./Download.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const filesDummy = [
   {
@@ -16,6 +16,18 @@ const filesDummy = [
 function Download() {
   const [files, setFiles] = useState(filesDummy); 
 
+useEffect(() => {fetchfiles},[])
+
+const fetchfiles = () => {
+  axios.get('http://localhost:3000/files/list').then
+  ((res) =>{
+    setFiles(res.data)  
+  })
+  .catch((err) => {
+    console.log(err)
+  })
+}
+
   return (
     <div className="download-container"> 
       <h1>Download</h1> 
@@ -23,7 +35,7 @@ function Download() {
         {files.map((file) => ( 
           <div key={Math.random()}> 
             <b>&bull;&nbsp;{file.name}</b> 
-            <a href={file.url}> 
+            <a href={file.url} target="_blank"> 
               <button className="dowload-button">&darr;</button>
             </a>
           </div>
